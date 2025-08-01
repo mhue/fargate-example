@@ -1,0 +1,30 @@
+{
+  "family": "my-fargate-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<account_id>:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "my-nginx",
+      "image": "<account_id>.dkr.ecr.us-west-2.amazonaws.com/my-fargate-app:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/my-fargate-task",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "essential": true
+    }
+  ]
+}
+
